@@ -14,7 +14,7 @@ export class Speech {
 
     constructor(subscriptionKey: string, region: string, connectionString: string, containerName: string) {
         this._client = sdk.SpeechConfig.fromSubscription(subscriptionKey, region)
-        this._client.setProperty("diarizationEnabled", "true")
+        this._client.setProperty("diarizationEnabled", "false")
         this._client.setProperty("punctuationMode", "DictatedAndAutomatic")
         this._client.requestWordLevelTimestamps()
         this._client.setProfanity(sdk.ProfanityOption.Masked)
@@ -72,13 +72,19 @@ export class Speech {
                 sasUrl
             ],
             "properties": {
-                "diarizationEnabled": true,
+                "diarizationEnabled": false,
                 "wordLevelTimestampsEnabled": true,
                 "punctuationMode": "DictatedAndAutomatic",
-                "profanityFilterMode": "Masked"
+                "profanityFilterMode": "Masked",
+                "languageIdentification": {
+                   "candidateLocales": [
+                     "es-CL",
+                     "es-CO"
+                   ]
+                }
             },
-            "locale": "en-US",
-            "displayName": "Transcription of file using default model for en-US"
+            "locale": "es-CL",
+            "displayName": "Transcription of file using default model for es-CL"
         }
         if (input?.serviceSpecificConfig?.to) {
             payload = {
@@ -86,13 +92,19 @@ export class Speech {
                     sasUrl
                 ],
                 "properties": {
-                    "diarizationEnabled": true,
+                    "diarizationEnabled": false,
                     "wordLevelTimestampsEnabled": true,
                     "punctuationMode": "DictatedAndAutomatic",
-                    "profanityFilterMode": "Masked"
+                    "profanityFilterMode": "Masked",
+                    "languageIdentification": {
+                   "candidateLocales": [
+                     "es-CL",
+                     "es-CO"
+                   ]
+                }
                 },
                 "locale": input.serviceSpecificConfig.to,
-                "displayName": "Transcription of file using default model for en-US"
+                "displayName": "Transcription of file using default model for es-CL"
             }
         }
         const axiosParams: AxiosRequestConfig = {
@@ -145,11 +157,11 @@ export class Speech {
             "properties": {
                 "wordLevelTimestampsEnabled": false
             },
-            "locale": "en-US",
+            "locale": "es-CL",
             "model": {
                 "self": process.env.WHISPER_MODEL//"https://eastus.api.cognitive.microsoft.com/speechtotext/v3.2-preview.1/models/base/71cbd7af-3212-43ab-8695-666fb28ffef7"
               },
-            "displayName": "Transcription of file using default model for en-US"
+            "displayName": "Transcription of file using default model for es-CL"
         }
         if (input?.serviceSpecificConfig?.to) {
             payload = {
@@ -163,7 +175,7 @@ export class Speech {
                     "self": process.env.WHISPER_MODEL
                   },
                 "locale": input.serviceSpecificConfig.to,
-                "displayName": "Transcription of file using default model for en-US"
+                "displayName": "Transcription of file using default model for es-CL"
             }
         }
         const axiosParams: AxiosRequestConfig = {
